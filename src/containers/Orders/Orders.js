@@ -8,13 +8,11 @@ import {connect} from 'react-redux';
 
 class Orders extends Component{
     componentDidMount(){
-        console.log(this.props.token, this.props.userId)
         this.props.onFetchOrders(this.props.token, this.props.userId)
         
     }
     render(){
         let orders = this.props.orders.map(order => {
-            console.log(order);
             return <Order key={order.id} ingredients={order.ingredients} price={+order.price} />
         });
         if(this.props.loading){

@@ -109,7 +109,6 @@ class ContactData extends Component {
             userId: this.props.userId
         }
         this.props.onOrderBurger(order, this.props.token);
-        console.log("orderHandler")
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -156,7 +155,6 @@ class ContactData extends Component {
     }
     
     render(){
-        console.log("rendering")
         const formElementsArray = [];
         for(let key in this.state.orderForm){
             formElementsArray.push({
@@ -186,7 +184,6 @@ class ContactData extends Component {
         let formRedirect = null;
 
         if(this.props.purchased){
-            console.log("Redirected")
             formRedirect = <Redirect to="/" />
         }
         return (

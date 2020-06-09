@@ -62,7 +62,6 @@ export const auth = (email, password, isSignUp) => {
             dispatch(checkAuthTimeout(response.data.expiresIn))
         })
         .catch(error => {
-            console.log(error);
             dispatch(authFail(error.response.data.error))
         })
         
@@ -71,19 +70,15 @@ export const auth = (email, password, isSignUp) => {
 
 export const authCheckState = () => {
     return dispatch => {
-        console.log("hi1")
         const token = localStorage.getItem('token');
         if(!token){
-            console.log("hi2")
             dispatch(logout())
         } else {
-            console.log("hi3")
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
             if(expirationDate <= new Date()){
-                console.log("hi4")
+    
                 dispatch(logout())
             } else {
-                console.log("hi5")
                 const userId = localStorage.getItem('userId');
                 dispatch(authSuccess(token, userId));
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));

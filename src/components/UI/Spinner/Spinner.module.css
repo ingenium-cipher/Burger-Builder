@@ -18,18 +18,18 @@
     -ms-transform: translateZ(0);
     transform: translateZ(0);
   }
-  .loader:before {
+  .Loader:before {
     width: 50%;
     height: 50%;
-    background: #274a82;
+    background: #fff;
     border-radius: 100% 0 0 0;
     position: absolute;
     top: 0;
     left: 0;
     content: '';
   }
-  .loader:after {
-    background: #274a82;
+  .Loader:after {
+    background: #fff;
     width: 75%;
     height: 75%;
     border-radius: 50%;

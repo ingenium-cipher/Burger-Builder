@@ -17,11 +17,9 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.token);
-    console.log(this.props.userId)
     let routes = (
       <Switch>
-        <Route path="/" exact component={BurgerBuilder} />  
+        <Route path= "/" exact component={BurgerBuilder} />  
         <Route path="/auth" component={Auth} />
         <Redirect to = "/" />
       </Switch>
