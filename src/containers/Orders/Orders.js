@@ -2,34 +2,22 @@ import React, {Component} from 'react';
 import Order from '../../components/Order/Order';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import withError from '../../hoc/withErrorHandler/withErrorHandler';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../store/actions/index';
+import {connect} from 'react-redux';
 
 class Orders extends Component{
-    state={
-        orders: [],
-        loading: false
-    }
     componentDidMount(){
-        this.setState({loading: true})
-        axios.get('/orders.json')
-        .then(response => {
-            const fetchedOrders = []
-            console.log(response.data);
-            for(let key in response.data){
-                fetchedOrders.push({...response.data[key], id: key})
-            }
-            this.setState({
-            orders: fetchedOrders,
-            loading: false
-        });
-        })
+        console.log(this.props.token, this.props.userId)
+        this.props.onFetchOrders(this.props.token, this.props.userId)
+        
     }
     render(){
-        let orders = this.state.orders.map(order => {
+        let orders = this.props.orders.map(order => {
             console.log(order);
             return <Order key={order.id} ingredients={order.ingredients} price={+order.price} />
         });
-        if(this.state.loading){
+        if(this.props.loading){
             orders = <Spinner />
         }
 
@@ -41,4 +29,18 @@ class Orders extends Component{
     }
 }
 
-export default withError(Orders, axios);
+const mapStateToProps = state => {
+    return {
+        orders: state.order.orders,
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchOrders: (token, userId) => {dispatch(actions.fetchOrders(token, userId))}
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
